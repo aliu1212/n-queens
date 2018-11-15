@@ -15,8 +15,16 @@
 
 
 
-window.findNRooksSolution = function(n) {
-  var solution = new Board({"n": n})
+window.findNRooksSolution = function(n, board = undefined, rooksToGo = n) {
+  if (board === undefined) {
+    var solution =  new Board({"n": n});
+    //var test_solution = new Board({"n": n})
+  } else{
+    var solution = board;
+    //var test_solution = board;
+  }
+  
+  //console.log("solution", test_solution)
   var rooksToGo = n;
   for (let i = 0; i<n; i++) {
     for (let j = 0; j<n; j++) {
@@ -42,12 +50,61 @@ window.findNRooksSolution = function(n) {
       }
     }
   }
+  return undefined
 };
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
+  //n=3
   var solutionCount = 0; //fixme
 
+  let zero_row = new Array(n).fill(0);
+  var zero_matrix = [];
+  for (let i = 0; i < n; i++) {
+    zero_matrix.push(zero_row);
+  }
+
+
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      zero_matrix[i][j] = 1;
+      // console.log(zero_matrix);
+      let board = new Board(zero_matrix);
+      console.log(board);
+      if (findNRooksSolution(n, board, n-1) !== undefined) {
+        solutionCount++;
+      }
+      zero_matrix[i][j] = 0;
+    }
+  }
+
+
+  // for(let i = n; i>0; i--) {
+  //   //generate board
+  //   //enumerate all possible boards
+
+  //   let possible_rows = []
+  //   //possible_rows.push(new Array(n).fill(0))
+  //   for (let j = 0; j <n; j++) {
+  //     var holding_row = new Array(n).fill(0)
+  //     holding_row[j] = 1
+  //     //console.log("HOLDING_ROW", holding_row)
+  //     possible_rows.push(holding_row)
+  //   }
+     
+  //   for (let i = 0; i < possible_rows.length; i++){
+
+  //     for (let j = 0; j < possible_rows.length; j++){
+
+  //     }
+  //   }
+    
+  //   //console.log(holding_row)
+  //   //let board = new Board(board_input)
+  // //   // pass generated board into findNRooksSolution; returns solution array if solutions; 
+  // //   //if returns solution array; increment counter
+
+  // }
 
 
   // if (n===1) {
